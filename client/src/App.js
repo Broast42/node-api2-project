@@ -1,13 +1,17 @@
-import React from 'react';
+import React, { useState }  from 'react';
 import './App.css';
-import AddForm from './components/AddPostForm';
+import AddPostForm from './components/AddPostForm';
 import PostWindow from './components/PostsWindow';
 
 function App() {
+  
+
+  const [postAdd, setPostAdd] = useState({});
+
   return (
     <div className="App">
-      <AddForm />
-      <PostWindow />
+      <AddPostForm postSetter={[postAdd, setPostAdd]}/>
+      <PostWindow newPostReset={postAdd}/>
     </div>
   );
 }

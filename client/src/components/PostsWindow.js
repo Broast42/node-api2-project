@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Posts from './Posts';
 
-const PostWindow = () => {
+const PostWindow = (props) => {
     const [ allPosts, setAllPosts ] = useState([]);
 
     useEffect(() => {
@@ -15,9 +15,9 @@ const PostWindow = () => {
             .catch(err =>{
                 console.log(err);
             })
-    },[])
+    },[props.newPostReset])
 
-    console.log(allPosts);
+    //console.log(allPosts);
     return(
         <div className="post-window">
             <div className="post-window-container">
