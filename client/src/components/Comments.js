@@ -5,12 +5,33 @@ const Comments = (props) => {
     const [comment, setComment]= useState([]);
     const [toggleComments, setToggleComments] = useState("none");
 
+    
+    const [commentAdd, setCommentAdd] = useState({});
+
     const toggleWindow = () => {
         if(toggleComments === "none"){
             setToggleComments("block");
         }else{
             setToggleComments("none");
         }
+    }
+
+    const handeler = (e) => {
+        setCommentAdd({
+            post_id: e.target.id,
+            text: e.target.value
+        })
+    }
+
+    const addComment = () => {
+        axios
+            .post(`http://localhost:8000/api/posts/${props.id}/comments`, commentAdd)
+            .then(res => {
+                console.log(res);
+            })
+            .catch(err => {
+                console.log(err);
+            })
     }
 
     useEffect(() =>{
@@ -23,9 +44,9 @@ const Comments = (props) => {
             .catch(err => {
                 console.log(err);
             })
-    },[props.id]);
+    },[props.id, commentAdd]);
 
-    //console.log(toggleComments);
+    console.log(commentAdd);
     return(
         <div>
             <div className="comments-bar">
@@ -52,12 +73,12 @@ const Comments = (props) => {
                     ))
                     
                     }
-                    <form>
+                    <form onSubmit={() => addComment()}>
                         <textarea
                             id={props.id}
                             name="text"
                             placeholder="add a comment"
-
+                            onChange={(e) => handeler(e)}
                         />
                         <button type="submit">submit</button>
                     </form>
